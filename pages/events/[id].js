@@ -12,12 +12,12 @@ import {
 } from "./../../helper/api-util";
 
 const SingleEvent = function (props) {
-  const router = useRouter();
-  const eventId = router.query.id;
+  // const router = useRouter();
+  // const eventId = router.query.id;
 
-  const item = getEventById(eventId);
+  // const item = getEventById(eventId);
 
-  // const item = props.events;
+  const item = props.events;
   // console.log(item);
 
   if (!item) return <p>No Event Found</p>;
@@ -39,9 +39,7 @@ const SingleEvent = function (props) {
 
 export async function getStaticProps(context) {
   const eventId = context.params.id;
-  // const event = await getSingleEventById(eventId);
-  const allEvents = await fetchData();
-  const event = allEvents.filter((el) => el.id === eventId);
+  const event = await getSingleEventById(eventId);
   return {
     props: { events: event },
   };

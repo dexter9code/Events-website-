@@ -2,7 +2,7 @@ export const fetchData = async function () {
   const res = await fetch(
     `https://react-https-6c233-default-rtdb.asia-southeast1.firebasedatabase.app/events.json`
   );
-  const data = res.json();
+  const data = await res.json();
 
   const transformData = [];
 
