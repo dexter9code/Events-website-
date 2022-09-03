@@ -37,5 +37,6 @@ export async function getStaticProps() {
 
   return {
     props: { events: transformData },
+    revalidate: 1800,
   };
 }
