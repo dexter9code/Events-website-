@@ -17,6 +17,17 @@ const FilteredEvenetsPage = function (props) {
   }
 
   const event = props.events;
+  if (!event || event.length === 0) {
+    return (
+      <>
+        <p className="center">No Events Found </p>
+
+        <div className="center">
+          <Button to={`/events`}>Go Back </Button>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div>
