@@ -34,3 +34,18 @@ export async function getAllAvialableEvents() {
   const allEvents = await fetchData();
   return allEvents;
 }
+
+export async function getFilterEvent(dateFilter) {
+  const { year, month } = dateFilter;
+
+  const allEvents = await fetchData();
+
+  let filteredEvents = allEvents.filter((event) => {
+    const eventDate = new Date(event.date);
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    );
+  });
+
+  return filteredEvents;
+}
