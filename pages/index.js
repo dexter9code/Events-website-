@@ -16,7 +16,6 @@ export default function Home(props) {
       </Head>
       <NewsletterRegistration />
       <EvnetList items={items} />
-      test
     </div>
   );
 }
