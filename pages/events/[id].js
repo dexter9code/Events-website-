@@ -3,6 +3,7 @@ import { getEventById } from "../../dummy-data";
 import EventSummary from "./../../components/event-detail/event-summary";
 import EventLogistics from "./../../components/event-detail/event-logistics";
 import EventContent from "./../../components/event-detail/event-content";
+import Comments from "./../../components/input/comments";
 
 import {
   fetchData,
@@ -32,6 +33,7 @@ const SingleEvent = function (props) {
           imageAlt={item.title}
         />
         <EventContent>{item.description}</EventContent>
+        <Comments eventId={item.id} />
       </>
     </div>
   );

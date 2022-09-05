@@ -1,10 +1,20 @@
+import Head from "next/head";
 import EvnetList from "./../components/events/event-list";
+import NewsletterRegistration from "./../components/input/newsletter-registration";
 
 export default function Home(props) {
   const unFilteredData = props.events;
   const items = unFilteredData.filter((el) => el.isFeatured);
   return (
     <div>
+      <Head>
+        <title>Next Events</title>
+        <meta
+          name="description"
+          content="Get lots of differents according to the need"
+        />
+      </Head>
+      <NewsletterRegistration />
       <EvnetList items={items} />
       test
     </div>
