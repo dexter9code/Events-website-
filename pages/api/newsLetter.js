@@ -22,6 +22,7 @@ async function handler(req, res) {
         status: `Failed`,
         message: `Failed Connecting with database`,
       });
+      return;
     }
 
     try {
@@ -32,6 +33,7 @@ async function handler(req, res) {
         message: `Error adding to Database`,
         actual: error.message,
       });
+      return;
     }
     await client.close();
 

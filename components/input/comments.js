@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import CommentList from "./comment-list";
 import NewComment from "./new-comment";
 import classes from "./comments.module.css";
+import NotificationContext from "../../context/notificationContext";
 
 function Comments(props) {
   const { eventId } = props;
+  const notificaitonCtx = useContext(NotificationContext);
 
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
@@ -25,16 +27,35 @@ function Comments(props) {
   }
 
   async function addCommentHandler(commentData) {
-    // send data to API
-    const res = await fetch(`/api/comments/${eventId}`, {
-      method: "POST",
-      body: JSON.stringify(commentData),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    notificaitonCtx.showNotification({
+      title: "Adding...",
+      message: `Adding your comment`,
+      status: `pending`,
     });
-    const data = await res.json();
-    console.log(data);
+
+    // send data to API
+    try {
+      const res = await fetch(`/api/comments/${eventId}`, {
+        method: "POST",
+        body: JSON.stringify(commentData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      notificaitonCtx.showNotification({
+        title: "Success",
+        message: `Added Successfully`,
+        status: `success`,
+      });
+      console.log(data);
+    } catch (error) {
+      notificaitonCtx.showNotification({
+        title: "Error",
+        message: `Error while adding your Comment`,
+        status: `error`,
+      });
+    }
   }
 
   return (
