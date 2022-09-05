@@ -1,11 +1,19 @@
-import { MongoClient } from "mongodb";
+import { connectionDb, insertIntoDocument } from "../../../helper/db-utils";
 
 async function comments(req, res) {
   const id = req.query.eventId;
 
-  const client = await MongoClient.connect(
-    "mongodb+srv://Mikey:myNameIs_Mikey@cluster0.mcfpfpr.mongodb.net/newsLetter?retryWrites=true&w=majority"
-  );
+  let client;
+
+  try {
+    client = await connectionDb();
+  } catch (error) {
+    res.status(500).json({
+      status: `Falid`,
+      message: `Connection to the database Failed...`,
+    });
+    return;
+  }
 
   if (req.method === "POST") {
     const email = req.body.email;
@@ -31,10 +39,17 @@ async function comments(req, res) {
       eventtId: id,
     };
 
-    const db = client.db();
-    const result = await db.collection("comments").insertOne(userInput);
+    let result;
 
-    console.log(result);
+    try {
+      result = await insertIntoDocument(client, "comments", userInput);
+    } catch (error) {
+      res.status(500).json({
+        status: `Faild`,
+        message: `Inserting to Database Failed`,
+      });
+      return;
+    }
 
     userInput.id = result.insertedId;
 
